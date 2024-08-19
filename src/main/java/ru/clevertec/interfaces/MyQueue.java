@@ -1,4 +1,4 @@
-package ru.clevertec;
+package ru.clevertec.interfaces;
 
 public interface MyQueue<E> extends MyCollection<E> {
     /**

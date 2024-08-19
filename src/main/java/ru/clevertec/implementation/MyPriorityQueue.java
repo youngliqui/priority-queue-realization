@@ -1,4 +1,6 @@
-package ru.clevertec;
+package ru.clevertec.implementation;
+
+import ru.clevertec.interfaces.MyQueue;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -26,8 +28,9 @@ public class MyPriorityQueue<E> implements MyQueue<E> {
     @Override
     public boolean add(E e) {
         if (e == null) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("the element can not be null");
         }
+        validateComparable(e);
         if (size == array.length) {
             resize();
         }
@@ -134,5 +137,11 @@ public class MyPriorityQueue<E> implements MyQueue<E> {
         Object temp = array[firstIndex];
         array[firstIndex] = array[secondIndex];
         array[secondIndex] = temp;
+    }
+
+    private void validateComparable(E element) throws IllegalArgumentException {
+        if (comparator == null && !(element instanceof Comparable)) {
+            throw new IllegalArgumentException("Elements must be comparable or a comparator must be provided");
+        }
     }
 }

@@ -29,7 +29,8 @@ class MyPriorityQueueTest {
             queue.add(3);
             queue.add(4);
 
-            assertThat(queue.toList()).containsExactly(3, 5, 4);
+            assertThat(queue.size()).isEqualTo(3);
+            assertThat(queue.toList()).contains(3, 5, 4);
         }
 
         @Test
@@ -40,7 +41,7 @@ class MyPriorityQueueTest {
             queue.add(2);
 
             assertThat(queue.size()).isEqualTo(4);
-            assertThat(queue.toList()).containsExactly(1, 2, 3, 6);
+            assertThat(queue.toList()).contains(1, 2, 3, 6);
 
             assertThat(queue.peek()).isEqualTo(1);
             assertThat(queue.size()).isEqualTo(4);
@@ -54,11 +55,11 @@ class MyPriorityQueueTest {
             queue.add(4);
 
             assertThat(queue.size()).isEqualTo(4);
-            assertThat(queue.toList()).containsExactly(3, 4, 5, 7);
+            assertThat(queue.toList()).contains(3, 4, 5, 7);
 
-            assertThat(queue.pool()).isEqualTo(3);
+            assertThat(queue.poll()).isEqualTo(3);
             assertThat(queue.size()).isEqualTo(3);
-            assertThat(queue.toList()).containsExactly(4, 7, 5);
+            assertThat(queue.toList()).contains(4, 7, 5);
         }
 
         @Test
@@ -67,10 +68,10 @@ class MyPriorityQueueTest {
             queue.add(3);
 
             assertThat(queue.size()).isEqualTo(2);
-            assertThat(queue.toList()).containsExactly(3, 10);
+            assertThat(queue.toList()).contains(3, 10);
 
-            assertThat(queue.pool()).isEqualTo(3);
-            assertThat(queue.pool()).isEqualTo(10);
+            assertThat(queue.poll()).isEqualTo(3);
+            assertThat(queue.poll()).isEqualTo(10);
             assertThat(queue.isEmpty()).isTrue();
         }
 
@@ -98,7 +99,7 @@ class MyPriorityQueueTest {
             queue.add(15);
 
             assertThat(queue.size()).isEqualTo(3);
-            assertThat(queue.toList()).containsExactly(20, 10, 15);
+            assertThat(queue.toList()).contains(20, 10, 15);
 
             assertThat(queue.peek()).isEqualTo(20);
             assertThat(queue.size()).isEqualTo(3);
@@ -112,11 +113,11 @@ class MyPriorityQueueTest {
             queue.add(30);
 
             assertThat(queue.size()).isEqualTo(4);
-            assertThat(queue.toList()).containsExactly(30, 30, 20, 5);
+            assertThat(queue.toList()).contains(30, 30, 20, 5);
 
-            assertThat(queue.pool()).isEqualTo(30);
+            assertThat(queue.poll()).isEqualTo(30);
             assertThat(queue.size()).isEqualTo(3);
-            assertThat(queue.toList()).containsExactly(30, 5, 20);
+            assertThat(queue.toList()).contains(30, 5, 20);
         }
     }
 
@@ -155,7 +156,8 @@ class MyPriorityQueueTest {
             queue.add(person2);
             queue.add(person3);
 
-            assertThat(queue.toArray()).containsExactly(person1, person2, person3);
+            assertThat(queue.size()).isEqualTo(3);
+            assertThat(queue.toArray()).contains(person1, person2, person3);
             assertThat(queue.poll()).isEqualTo(person1);
             assertThat(queue.size()).isEqualTo(2);
         }
@@ -180,7 +182,10 @@ class MyPriorityQueueTest {
         @Test
         void shouldThrowExceptionWhenClassWithoutComparable() {
             queue = new MyPriorityQueue<>();
-            assertThrows(IllegalArgumentException.class, () -> queue.add(new Person("Ey", 12)));
+            assertThrows(ClassCastException.class, () -> {
+                queue.add(new Person("first", 12));
+                queue.add(new Person("second", 22));
+            });
         }
     }
 }

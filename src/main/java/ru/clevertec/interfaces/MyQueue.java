@@ -21,5 +21,5 @@ public interface MyQueue<E> extends MyCollection<E> {
      *
      * @return the head of the queue or null if the queue is empty
      */
-    E pool();
+    E poll();
 }
